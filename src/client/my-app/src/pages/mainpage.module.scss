@@ -1,0 +1,17 @@
+
+
+.outer {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}  
+
+.todosection {
+    background-color: lightgray;
+    border-radius: 0.5rem;
+    width: 40%;
+    height: 60vh;
+}
