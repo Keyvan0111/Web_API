@@ -33,22 +33,16 @@ const StatusColumn: React.FC<Props> = ({
   droppableID,
   setTasks,
 }) => {
-  const handleAdd = () => {
-    const newTask = "New Task";
-    setTasks((prevTask) => [...prevTask, newTask]);
+
+  const handleAddTask = (newTask: { companyName: string; positionTitle: string; deadlineDate: string }) => {
+    // setTasks((prevTodos) => [...prevTodos, newTask]);
   };
 
   const removeTask = (taskIndex: number) => {
     setTasks((prevTasks) =>
       prevTasks.filter((_, index) => index !== taskIndex)
     );
-  };
-  
-
-  const HandleOnDragEnd = (result: DropResult) => {
-
-  };
-  
+  };  
 
   return (
     <>
@@ -57,7 +51,7 @@ const StatusColumn: React.FC<Props> = ({
           header={header}
           headerBg={headerBg}
           titleColor={titleColor}
-          handleAdd={handleAdd}
+          handleAdd={handleAddTask}
         />
           <Box
             borderRadius={"0.5rem"}

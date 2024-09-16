@@ -11,9 +11,13 @@ import { Box, Flex } from "@chakra-ui/react";
 import { color } from "framer-motion";
 import { assert, error } from "console";
 
-const Mainpage: React.FC = () => {
-    const [activeCard, setActiveCard] = useState(null)
+interface TaskProp {
+    companyName: string
+    positionTitle: string
+    deadlineDate: string
+}
 
+const Mainpage: React.FC = () => {
     const [todos, setTodos] = useState<string[]>([])
     const [ongoings, setOngoings] = useState<string[]>([])
     const [done, setDone] = useState<string[]>([])
@@ -81,7 +85,6 @@ const Mainpage: React.FC = () => {
     return (
         <div className={styles.outer}>
             <div className={styles.todosection}>
-
                 <Todoheader/>
                 <DragDropContext onDragEnd={HandleOnDragEnd}>
                     <Box
@@ -93,7 +96,6 @@ const Mainpage: React.FC = () => {
                     justifyContent={"space-evenly"}
                     gap={'20px'}
                     >
-
                         <StatusColumn header="Todo" headerBg="lightgray" titleColor="black" tasks={todos} droppableID="todos" setTasks={setTodos}/>
                         <StatusColumn header="In-progress" headerBg="#1c2b41" titleColor="#85b8ff" tasks={ongoings} droppableID="ongoings" setTasks={setOngoings}/>
                         <StatusColumn header="Done" headerBg="#1c3329" titleColor="#7de2b8" tasks={done} droppableID="done" setTasks={setDone}/>

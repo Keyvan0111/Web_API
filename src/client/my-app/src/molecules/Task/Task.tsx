@@ -29,7 +29,7 @@ interface Props {
     onRemove: () => void;
 }
 
-const Task:React.FC<Props> = ({body,  index, onRemove}) => {
+const Task:React.FC<Props> = ({body, index, onRemove}) => {
 
     return (
         <>

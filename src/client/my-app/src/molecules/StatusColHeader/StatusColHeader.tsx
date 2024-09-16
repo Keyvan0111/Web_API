@@ -6,12 +6,12 @@ import {
 import { 
     AddIcon
 } from '@chakra-ui/icons'
-
+import AddTask from '../AddTask/AddTask';
 interface Props {
     header: string
     headerBg: string
     titleColor: string
-    handleAdd: () => void
+    handleAdd: (newTask: { companyName: string; positionTitle: string; deadlineDate: string }) => void
 }
 
 const StatusColHeader:React.FC<Props> = ({header, headerBg, titleColor, handleAdd}) => {
@@ -32,15 +32,7 @@ const StatusColHeader:React.FC<Props> = ({header, headerBg, titleColor, handleAd
                     >
                     <p>{header}</p>
                 </Box>
-                <IconButton 
-                    aria-label='Delete'
-                    icon={<AddIcon boxSize={'1rem'}/>}
-                    color={'black'}
-                    colorScheme='gray'
-                    size={'sm'}
-                    onClick={handleAdd}
-                    >
-                </IconButton>
+                <AddTask handleAdd={handleAdd}/>
             </Box>
         </>
     )
