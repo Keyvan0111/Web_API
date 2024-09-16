@@ -16,21 +16,23 @@ const Mainpage: React.FC = () => {
 
     
 
-    const onDragEnd = (result: DropResult) => {
+    const HandleOnDragEnd = (result: DropResult) => {
+        console.log(result)
         const { source, destination } = result;
     
         if (!destination) return;
     
         const sourceCol = source.droppableId;
         const destinationCol = destination.droppableId;
-      };
+
+    };
 
     return (
         <div className={styles.outer}>
             <div className={styles.todosection}>
 
                 <Todoheader/>
-                <DragDropContext onDragEnd={onDragEnd}>
+                <DragDropContext onDragEnd={HandleOnDragEnd}>
                     <Box
                     margin={'0px'}
                     w={'100%'}
