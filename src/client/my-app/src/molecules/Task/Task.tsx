@@ -19,17 +19,16 @@ import {
 
 
 interface Props {
-    // header : { // adding header for searching jobs
-    //     title:string;
-    //     company:string;
-    //     deadline:string;
-    // }
-    body:string;
+    content : {
+        companyName:string;
+        positionTitle:string;
+        deadlineDate:string;
+    }
     index:number;
     onRemove: () => void;
 }
 
-const Task:React.FC<Props> = ({body, index, onRemove}) => {
+const Task:React.FC<Props> = ({content, index, onRemove}) => {
 
     return (
         <>
@@ -46,7 +45,9 @@ const Task:React.FC<Props> = ({body, index, onRemove}) => {
 
             <Stack>
                 <CardBody>
-                    <Text fontSize={'1rem'}>{body}</Text>
+                    <Text fontSize={'1rem'}>{content['companyName']}</Text>
+                    <Text fontSize={'1rem'}>{content['positionTitle']}</Text>
+                    <Text fontSize={'1rem'}>{content['deadlineDate']}</Text>
                 </CardBody>
             </Stack>
         </Card>

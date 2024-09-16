@@ -16,13 +16,19 @@ import {
   DropResult,
 } from '@hello-pangea/dnd'
 
+interface TaskProp {
+    companyName: string
+    positionTitle: string
+    deadlineDate: string
+}
+
 interface Props {
   header: string;
   headerBg: string;
   titleColor: string;
-  tasks: string[];
+  tasks: TaskProp[];
   droppableID: string;
-  setTasks: React.Dispatch<React.SetStateAction<string[]>>;
+  setTasks: React.Dispatch<React.SetStateAction<TaskProp[]>>;
 }
 
 const StatusColumn: React.FC<Props> = ({
@@ -35,7 +41,7 @@ const StatusColumn: React.FC<Props> = ({
 }) => {
 
   const handleAddTask = (newTask: { companyName: string; positionTitle: string; deadlineDate: string }) => {
-    // setTasks((prevTodos) => [...prevTodos, newTask]);
+    setTasks((prevTodos) => [...prevTodos, newTask]);
   };
 
   const removeTask = (taskIndex: number) => {
@@ -71,7 +77,7 @@ const StatusColumn: React.FC<Props> = ({
                     {...provided.droppableProps}
                 >
                   <Stack>
-                    {tasks.map((task, index) => (
+                    {tasks.map((content, index) => (
                       <Draggable key={index} draggableId={String(droppableID+index)} index={index}>
                         {(provided) => (
                           <Box
@@ -81,7 +87,7 @@ const StatusColumn: React.FC<Props> = ({
                           >
                             <Task
                               key={index}
-                              body={task}
+                              content={content}
                               index={index}
                               onRemove={() => removeTask(index)}
                             />

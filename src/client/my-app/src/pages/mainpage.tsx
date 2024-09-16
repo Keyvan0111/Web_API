@@ -18,9 +18,9 @@ interface TaskProp {
 }
 
 const Mainpage: React.FC = () => {
-    const [todos, setTodos] = useState<string[]>([])
-    const [ongoings, setOngoings] = useState<string[]>([])
-    const [done, setDone] = useState<string[]>([])
+    const [todos, setTodos] = useState<TaskProp[]>([])
+    const [ongoings, setOngoings] = useState<TaskProp[]>([])
+    const [done, setDone] = useState<TaskProp[]>([])
 
     const getColState = (dropID: string) => {
         try {
@@ -40,7 +40,7 @@ const Mainpage: React.FC = () => {
         }
     }
     
-    const updateState = (stateVar: string, updatedState: string[]) => {
+    const updateState = (stateVar: string, updatedState: TaskProp[]) => {
         try {
             switch (stateVar) {
                 case 'todos':
@@ -71,8 +71,8 @@ const Mainpage: React.FC = () => {
         const sourceCol = source.droppableId;
         const destinationCol = destination.droppableId;
 
-        let srcItems: string[] = getColState(sourceCol) || []
-        let dstItems: string[] = getColState(destinationCol) || []
+        let srcItems: TaskProp[] = getColState(sourceCol) || []
+        let dstItems: TaskProp[] = getColState(destinationCol) || []
 
         const [movedItem] = srcItems.splice(source.index, 1)
 

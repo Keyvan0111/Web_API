@@ -42,8 +42,6 @@ const AddTask:React.FC<Props> = ({handleAdd}) => {
         console.log(name, value)
     };
     
-
-
     const onSubmit = () => {
         try {
             if (!formData['companyName'] || !formData['positionTitle'] || !formData['deadlineDate']){
