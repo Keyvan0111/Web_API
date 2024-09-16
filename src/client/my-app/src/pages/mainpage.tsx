@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { 
+    useState,
+    SetStateAction
+ } from "react";
 import styles from './mainpage.module.scss'
 import Todoheader from "../Atoms/Todoheader";
 import StatusColumn from "../Organisms/StatusColumn/StatusColumn";
@@ -6,6 +9,7 @@ import StatusColumn from "../Organisms/StatusColumn/StatusColumn";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import { Box, Flex } from "@chakra-ui/react";
 import { color } from "framer-motion";
+import { assert, error } from "console";
 
 const Mainpage: React.FC = () => {
     const [activeCard, setActiveCard] = useState(null)
@@ -14,7 +18,45 @@ const Mainpage: React.FC = () => {
     const [ongoings, setOngoings] = useState<string[]>([])
     const [done, setDone] = useState<string[]>([])
 
+    const getColState = (dropID: string) => {
+        try {
+            switch (dropID) {
+                case 'todos':
+                    return todos
+                case 'ongoings':
+                    return ongoings
+                case 'done':
+                    return done
+                default:
+                    console.log('Failed');
+                    return []
+            }
+        } catch (error) {
+            console.log("Failed getting column item when handling _onDragEnd_")
+        }
+    }
     
+    const updateState = (stateVar: string, updatedState: string[]) => {
+        try {
+            switch (stateVar) {
+                case 'todos':
+                    setTodos(updatedState)
+                    break;
+                case 'ongoings':
+                    setOngoings(updatedState)
+                    break;
+                case 'done':
+                    setDone(updatedState)
+                    break;
+                default:
+                    console.log('Failed')
+                    break;
+            }
+
+        } catch (error) {
+            console.log(`Failed updating react state ${stateVar}}`)
+        }
+    }
 
     const HandleOnDragEnd = (result: DropResult) => {
         console.log(result)
@@ -25,6 +67,15 @@ const Mainpage: React.FC = () => {
         const sourceCol = source.droppableId;
         const destinationCol = destination.droppableId;
 
+        let srcItems: string[] = getColState(sourceCol) || []
+        let dstItems: string[] = getColState(destinationCol) || []
+
+        const [movedItem] = srcItems.splice(source.index, 1)
+
+        dstItems.splice(destination.index, 0,movedItem)
+
+        updateState(destinationCol, srcItems);
+        updateState(destinationCol, dstItems);
     };
 
     return (
@@ -43,9 +94,9 @@ const Mainpage: React.FC = () => {
                     gap={'20px'}
                     >
 
-                        <StatusColumn header="Todo" headerBg="lightgray" tasks={todos} droppableID="todos" setTasks={setTodos}/>
-                        <StatusColumn header="In-progress" headerBg="#829cfa" tasks={ongoings} droppableID="ongoings" setTasks={setOngoings}/>
-                        <StatusColumn header="Done" headerBg="#78ff91" tasks={done} droppableID="done" setTasks={setDone}/>
+                        <StatusColumn header="Todo" headerBg="lightgray" titleColor="black" tasks={todos} droppableID="todos" setTasks={setTodos}/>
+                        <StatusColumn header="In-progress" headerBg="#1c2b41" titleColor="#85b8ff" tasks={ongoings} droppableID="ongoings" setTasks={setOngoings}/>
+                        <StatusColumn header="Done" headerBg="#1c3329" titleColor="#7de2b8" tasks={done} droppableID="done" setTasks={setDone}/>
 
                     </Box>
                 </DragDropContext>

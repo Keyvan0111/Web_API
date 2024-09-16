@@ -10,10 +10,11 @@ import {
 interface Props {
     header: string
     headerBg: string
+    titleColor: string
     handleAdd: () => void
 }
 
-const StatusColHeader:React.FC<Props> = ({header, headerBg, handleAdd}) => {
+const StatusColHeader:React.FC<Props> = ({header, headerBg, titleColor, handleAdd}) => {
     return (
         <>
             <Box
@@ -22,6 +23,8 @@ const StatusColHeader:React.FC<Props> = ({header, headerBg, handleAdd}) => {
                 justifyContent={'space-between'}>
                 <Box
                     backgroundColor={headerBg}
+                    color={titleColor}
+                    fontWeight={'bold'}
                     borderRadius='0.5rem'
                     padding='.2rem'
                     paddingLeft={'.5rem'}

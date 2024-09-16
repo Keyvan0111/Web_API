@@ -19,6 +19,7 @@ import {
 interface Props {
   header: string;
   headerBg: string;
+  titleColor: string;
   tasks: string[];
   droppableID: string;
   setTasks: React.Dispatch<React.SetStateAction<string[]>>;
@@ -27,6 +28,7 @@ interface Props {
 const StatusColumn: React.FC<Props> = ({
   header,
   headerBg,
+  titleColor,
   tasks,
   droppableID,
   setTasks,
@@ -54,6 +56,7 @@ const StatusColumn: React.FC<Props> = ({
         <StatusColHeader
           header={header}
           headerBg={headerBg}
+          titleColor={titleColor}
           handleAdd={handleAdd}
         />
           <Box
@@ -75,7 +78,7 @@ const StatusColumn: React.FC<Props> = ({
                 >
                   <Stack>
                     {tasks.map((task, index) => (
-                      <Draggable key={index} draggableId={String(index+droppableID)} index={index}>
+                      <Draggable key={index} draggableId={String(droppableID+index)} index={index}>
                         {(provided) => (
                           <Box
                             ref={provided.innerRef}
