@@ -15,20 +15,22 @@ const Mainpage: React.FC = () => {
     const [done, setDone] = useState<string[]>([])
 
     
+
     const onDragEnd = (result: DropResult) => {
-        const { source, destination } = result
-
+        const { source, destination } = result;
+    
         if (!destination) return;
-
-        const sourceCol = source.droppableId as keyof typeof todos;
-    }
+    
+        const sourceCol = source.droppableId;
+        const destinationCol = destination.droppableId;
+      };
 
     return (
         <div className={styles.outer}>
             <div className={styles.todosection}>
 
                 <Todoheader/>
-
+                <DragDropContext onDragEnd={onDragEnd}>
                     <Box
                     margin={'0px'}
                     w={'100%'}
@@ -39,12 +41,12 @@ const Mainpage: React.FC = () => {
                     gap={'20px'}
                     >
 
-                        <StatusColumn header="Todo" headerBg="lightgray" tasks={todos} setTasks={setTodos}/>
-                        <StatusColumn header="In-progress" headerBg="#829cfa" tasks={ongoings} setTasks={setOngoings}/>
-                        <StatusColumn header="Done" headerBg="#78ff91" tasks={done} setTasks={setDone}/>
+                        <StatusColumn header="Todo" headerBg="lightgray" tasks={todos} droppableID="todos" setTasks={setTodos}/>
+                        <StatusColumn header="In-progress" headerBg="#829cfa" tasks={ongoings} droppableID="ongoings" setTasks={setOngoings}/>
+                        <StatusColumn header="Done" headerBg="#78ff91" tasks={done} droppableID="done" setTasks={setDone}/>
 
                     </Box>
-
+                </DragDropContext>
             </div>
         </div>
     )
