@@ -14,7 +14,7 @@ import {
   Draggable,
   DragDropContext,
   DropResult,
-} from "react-beautiful-dnd";
+} from '@hello-pangea/dnd'
 
 interface Props {
   header: string;
@@ -60,9 +60,14 @@ const StatusColumn: React.FC<Props> = ({
             overflow={"hidden"}
             overflowY={"scroll"}
           >
-            <Droppable droppableId={droppableID}>
+            <Droppable 
+                droppableId={droppableID}
+                >
               {(provided) => (
-                <Box ref={provided.innerRef} {...provided.droppableProps}>
+                <Box 
+                    ref={provided.innerRef} 
+                    {...provided.droppableProps}
+                >
                   <Stack>
                     {tasks.map((task, index) => (
                       <Draggable key={task} draggableId={task} index={index}>
@@ -82,8 +87,8 @@ const StatusColumn: React.FC<Props> = ({
                         )}
                       </Draggable>
                     ))}
-                  </Stack>
                   {provided.placeholder}
+                  </Stack>
                 </Box>
               )}
             </Droppable>

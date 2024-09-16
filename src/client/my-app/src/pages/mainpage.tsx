@@ -3,7 +3,7 @@ import styles from './mainpage.module.scss'
 import Todoheader from "../Atoms/Todoheader";
 import StatusColumn from "../Organisms/StatusColumn/StatusColumn";
 
-import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import { Box, Flex } from "@chakra-ui/react";
 import { color } from "framer-motion";
 
