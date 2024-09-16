@@ -41,7 +41,12 @@ const StatusColumn: React.FC<Props> = ({
       prevTasks.filter((_, index) => index !== taskIndex)
     );
   };
+  
 
+  const HandleOnDragEnd = (result: DropResult) => {
+
+  };
+  
 
   return (
     <>
@@ -70,7 +75,7 @@ const StatusColumn: React.FC<Props> = ({
                 >
                   <Stack>
                     {tasks.map((task, index) => (
-                      <Draggable key={task} draggableId={task} index={index}>
+                      <Draggable key={index} draggableId={String(index+droppableID)} index={index}>
                         {(provided) => (
                           <Box
                             ref={provided.innerRef}
@@ -78,7 +83,7 @@ const StatusColumn: React.FC<Props> = ({
                             {...provided.dragHandleProps}
                           >
                             <Task
-                              key={task}
+                              key={index}
                               body={task}
                               index={index}
                               onRemove={() => removeTask(index)}

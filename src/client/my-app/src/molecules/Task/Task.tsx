@@ -29,11 +29,11 @@ interface Props {
     onRemove: () => void;
 }
 
-const Task:React.FC<Props> = ({body, index,onRemove}) => {
+const Task:React.FC<Props> = ({body,  index, onRemove}) => {
 
     return (
         <>
-        <Card position={'relative'} direction={{ base: 'column', sm: 'row' }} draggable>
+        <Card position={'relative'} direction={{ base: 'column', sm: 'row' }} >
             <Box position={'absolute'} right={'0.3rem'} top={'0.3rem'}>
                 <IconButton
                     aria-label="Delete"
