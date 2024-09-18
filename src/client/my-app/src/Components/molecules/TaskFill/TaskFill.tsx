@@ -46,6 +46,7 @@ const TaskFill:React.FC<Props> = ({onChange}) => {
             <Box>
                 <Text>Deadline</Text>
                 <Input 
+                    type='date'
                     name='deadlineDate' 
                     variant='flushed' 
                     placeholder='dd-mm-yyyy' 

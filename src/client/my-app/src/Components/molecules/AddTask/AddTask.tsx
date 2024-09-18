@@ -20,6 +20,7 @@ import {
     AddIcon
 } from '@chakra-ui/icons'
 import TaskFill from '../TaskFill/TaskFill'
+import { getTasks } from '../../../api/Task'
 
 interface Props {
     handleAdd: (newTask: { companyName: string; positionTitle: string; deadlineDate: string }) => void
@@ -28,9 +29,9 @@ interface Props {
 const AddTask:React.FC<Props> = ({handleAdd}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [formData, setFormData] = useState({
-        companyName: '',
-        positionTitle: '',
-        deadlineDate: ''
+        companyName: 'Template',
+        positionTitle: 'Template',
+        deadlineDate: 'Template'
     })
 
     const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +40,6 @@ const AddTask:React.FC<Props> = ({handleAdd}) => {
             ...prevData,
             [name]: value,
         }));
-        console.log(name, value)
     };
     
     const onSubmit = () => {
@@ -48,8 +48,14 @@ const AddTask:React.FC<Props> = ({handleAdd}) => {
                 alert("Please fill in all credientals")
                 return;
             }
+            // const rs = getTasks()
 
             handleAdd(formData)
+            setFormData({
+                companyName: 'Template',
+                positionTitle: 'Template', 
+                deadlineDate: 'Template'
+            })
             onClose()
         } catch (error) {
             console.error("Error during registration:", error);

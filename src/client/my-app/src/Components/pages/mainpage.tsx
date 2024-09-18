@@ -1,20 +1,32 @@
 import React, { 
     useState,
-    SetStateAction
+    SetStateAction,
+    useEffect
  } from "react";
 import styles from './mainpage.module.scss'
 import Todoheader from "../Atoms/Todoheader";
 import StatusColumn from "../Organisms/StatusColumn/StatusColumn";
 
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, filter, Flex } from "@chakra-ui/react";
 import { color } from "framer-motion";
 import { assert, error } from "console";
+import { getTasks } from "../../api/Task";
 
 interface TaskProp {
     companyName: string
     positionTitle: string
     deadlineDate: string
+}
+
+interface Todo {
+    company: string
+    positionTitle: string
+    deadlineDate: string
+}
+
+interface TodoArr {
+    items: Todo[]
 }
 
 const Mainpage: React.FC = () => {
@@ -82,6 +94,38 @@ const Mainpage: React.FC = () => {
         updateState(destinationCol, dstItems);
     };
 
+    
+    const addPreTodos = (newtasks:TodoArr) => {
+        const items:Todo[] = newtasks['items']
+        for (let i = 0; i < items.length; i++) {
+            console.log(items)
+            const item:Todo = items[i]
+            const task:TaskProp = {
+                companyName: item.company,
+                positionTitle: item.positionTitle,
+                deadlineDate: item.deadlineDate
+            };
+            setTodos((prevtasks) => [...prevtasks, task])
+        }
+    }
+
+    useEffect(() => {
+        let isMounted = true; // Flag to check if component is mounted
+        
+        const fetchTasks = async () => {
+            const tasks:any = await getTasks();
+            if (isMounted) { // Only proceed if component is still mounted
+                addPreTodos(tasks);
+            }
+        };
+        
+        fetchTasks();
+        
+        return () => {
+            isMounted = false; // Cleanup on component unmount
+        };
+    }, []);
+    
     return (
         <div className={styles.outer}>
             <div className={styles.todosection}>
