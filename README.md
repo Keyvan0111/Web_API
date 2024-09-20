@@ -1,3 +1,3 @@
-# TODO: Write a simple README
+### Run the program
 
-This file should contain all of the information regarding how to run and verify your solution.
+To run this program please read the README both in the client/README.md and backend/README.md
