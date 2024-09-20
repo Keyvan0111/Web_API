@@ -5,12 +5,8 @@ import {
   Droppable,
   Draggable,
 } from '@hello-pangea/dnd'
-
-interface TaskProp {
-    companyName: string
-    positionTitle: string
-    deadlineDate: string
-}
+import { TaskProp } from "../../../Models/Task";
+import { deleteTask, putTasks } from "../../../api/Task";
 
 interface Props {
   tasks: TaskProp[];
@@ -20,18 +16,26 @@ interface Props {
 
 const StatusTasks:React.FC<Props> = ({tasks, droppableID, setTasks}) => {
 
-    const removeTask = (taskIndex: number) => {
+    const removeTask = async (taskIndex: number) => {
+        const toRemove:TaskProp = tasks[taskIndex]
+        await deleteTask(toRemove['item_id'])
+
         setTasks((prevTasks) =>
           prevTasks.filter((_, index) => index !== taskIndex)
         );
       };  
 
-    const editTask = (updatedTask:TaskProp, taskIndex:number) => {
+    const editTask = async (updatedTask:TaskProp, taskIndex:number) => {
+        const oldTask:TaskProp = tasks[taskIndex]
+        console.log(tasks)
+
         setTasks((prevTask) => {
-            const newtask = [...prevTask, updatedTask];
+            const newtask = [...prevTask];
             newtask[taskIndex] = updatedTask
             return newtask
         })
+        const itemId = oldTask['item_id']
+        await putTasks(itemId, updatedTask)
     }
 
   return (

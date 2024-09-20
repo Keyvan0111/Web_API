@@ -2,12 +2,9 @@ import React, { useEffect, useState } from "react";
 import { chakra, Box, Stack, Card, IconButton } from "@chakra-ui/react";
 import StatusColHeader from "../../molecules/StatusColHeader/StatusColHeader";
 import StatusTasks from "../../molecules/StatusTasks/StatusTasks";
-
-interface TaskProp {
-    companyName: string
-    positionTitle: string
-    deadlineDate: string
-}
+import {TaskProp} from "../../../Models/Task"
+import { create } from "domain";
+import { createTask } from "../../../api/Task";
 
 interface Props {
   header: string;
@@ -27,15 +24,10 @@ const StatusColumn: React.FC<Props> = ({
   setTasks,
 }) => {
 
-  const handleAddTaskMine = (newTask: { companyName: string; positionTitle: string; deadlineDate: string }) => {
-
-    setTasks((prevTodos) => [...prevTodos, newTask]);
+  const handleAddTask = async (newTask:TaskProp) => {
+    const rs = await createTask(newTask)
+    setTasks((prevTodos) => [...prevTodos, rs.item]);
   };
-
-  const handleAddTask = (newTask: { companyName: string; positionTitle: string; deadlineDate: string }) => {
-    setTasks((prevTodos) => [...prevTodos, newTask]);
-  };
-
 
   return (
     <>

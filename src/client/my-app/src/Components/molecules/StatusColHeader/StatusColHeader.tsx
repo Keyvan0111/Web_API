@@ -3,11 +3,12 @@ import {
     Box
 } from '@chakra-ui/react'
 import AddTask from '../AddTask/AddTask';
+import { TaskProp } from '../../../Models/Task';
 interface Props {
     header: string
     headerBg: string
     titleColor: string
-    handleAdd: (newTask: { companyName: string; positionTitle: string; deadlineDate: string }) => void;
+    handleAdd: (newTask: TaskProp) => void;
 }
 
 const StatusColHeader:React.FC<Props> = ({header, headerBg, titleColor, handleAdd}) => {

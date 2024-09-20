@@ -20,10 +20,11 @@ import {
     AddIcon
 } from '@chakra-ui/icons'
 import TaskFill from '../TaskFill/TaskFill'
-import { getTasks } from '../../../api/Task'
+import { createTask, getTasks } from '../../../api/Task'
+import { TaskProp } from '../../../Models/Task'
 
 interface Props {
-    handleAdd: (newTask: { companyName: string; positionTitle: string; deadlineDate: string }) => void
+    handleAdd: (newTask: TaskProp) => void
 }
 
 const AddTask:React.FC<Props> = ({handleAdd}) => {
@@ -48,8 +49,8 @@ const AddTask:React.FC<Props> = ({handleAdd}) => {
                 alert("Please fill in all credientals")
                 return;
             }
-            // const rs = getTasks()
 
+            
             handleAdd(formData)
             setFormData({
                 companyName: 'Template',

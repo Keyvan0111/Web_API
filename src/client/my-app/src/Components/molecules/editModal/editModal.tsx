@@ -1,5 +1,6 @@
 import React, {
-    useState
+    useState,
+    useEffect
 } from 'react'
 import {
     Modal,
@@ -44,6 +45,7 @@ const EditModal:React.FC<Props> = ({initialFormData, editTask}) => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+        
         setFormData((prevState) => ({
           ...prevState,
           [name]: value,
@@ -53,12 +55,12 @@ const EditModal:React.FC<Props> = ({initialFormData, editTask}) => {
       // Handle submit
       const handleSubmit = () => {
         editTask(formData); // Pass the updated data back to parent
-
-        // call api put data
-        // const rs = putTasks(formData['companyName'])
-
         onClose(); // Close modal after editing
       };
+
+    useEffect(() => {
+        setFormData(initialFormData);  // Update form data with latest task data
+    }, [initialFormData]); 
     
   return (
         <>

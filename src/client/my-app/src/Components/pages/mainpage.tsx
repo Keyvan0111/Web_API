@@ -12,21 +12,10 @@ import { Box, filter, Flex } from "@chakra-ui/react";
 import { color } from "framer-motion";
 import { assert, error } from "console";
 import { getTasks } from "../../api/Task";
-
-interface TaskProp {
-    companyName: string
-    positionTitle: string
-    deadlineDate: string
-}
-
-interface Todo {
-    company: string
-    positionTitle: string
-    deadlineDate: string
-}
+import { TaskProp } from "../../Models/Task";
 
 interface TodoArr {
-    items: Todo[]
+    items: TaskProp[]
 }
 
 const Mainpage: React.FC = () => {
@@ -90,23 +79,15 @@ const Mainpage: React.FC = () => {
 
         dstItems.splice(destination.index, 0,movedItem)
 
-        updateState(destinationCol, srcItems);
+        updateState(sourceCol, srcItems);
         updateState(destinationCol, dstItems);
     };
 
     
     const addPreTodos = (newtasks:TodoArr) => {
-        const items:Todo[] = newtasks['items']
-        for (let i = 0; i < items.length; i++) {
-            console.log(items)
-            const item:Todo = items[i]
-            const task:TaskProp = {
-                companyName: item.company,
-                positionTitle: item.positionTitle,
-                deadlineDate: item.deadlineDate
-            };
-            setTodos((prevtasks) => [...prevtasks, task])
-        }
+        const items:TaskProp[] = newtasks['items']
+        setTodos(items)
+        
     }
 
     useEffect(() => {
