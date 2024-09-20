@@ -5,9 +5,10 @@ import time
 from random import random
 
 items = [
-    {"id": 1, "name": "Create a client application", "done": False},
-    {"id": 2, "name": "Write an excellent report", "done": False},
-    {"id": 3, "name": "Jazz it up with some cool features?", "done": False},
+    {"item_id": 1, "companyName": "Bekk", "positionTitle": "Summer Intern Developer", "deadlineDate": "2024-10-12"},
+    {"item_id": 2, "companyName": "Microsoft", "positionTitle": "Part Time Software Developer", "deadlineDate": "2024-10-01"},
+    {"item_id": 3, "companyName": "Bouvet", "positionTitle": "Software engineer", "deadlineDate": "2024-10-11"},
+    {"item_id": 4, "companyName": "Accenture", "positionTitle": "Graduate program", "deadlineDate": "2024-10-21"}
 ]
 
 app = Flask(__name__)
@@ -57,7 +58,7 @@ def get_items():
 @app.route("/api/items/<int:item_id>", methods=["GET"])
 def get_item(item_id):
     for item in items:
-        if item["id"] == item_id:
+        if item["item_id"] == item_id:
             return jsonify({"item": item})
     message = f"No item with ID {item_id}."
     abort(404, message)
@@ -67,14 +68,15 @@ def get_item(item_id):
 def create_item():
     if not request.json:
         abort(400, "Must be JSON.")
-    if "name" not in request.json:
-        abort(400, "Must contain 'name'-field.")
-    if not isinstance(request.json["name"], str):
-        description = f"'name'-field must be str."
+    if "companyName" not in request.json:
+        abort(400, "Must contain 'companyName'-field.")
+    if not isinstance(request.json["companyName"], str):
+        description = f"'companyName'-field must be str."
         abort(400, description)
-    new_id = 0 if not items else max(item["id"] for item in items) + 1
-    item = {"id": new_id, "name": request.json["name"], "done": False}
+    new_id = 0 if not items else max(item["item_id"] for item in items) + 1
+    item = {"item_id": new_id, "companyName": request.json["companyName"], "positionTitle": request.json["positionTitle"], "deadlineDate": request.json["deadlineDate"]}
     items.append(item)
+    print(items)
     return jsonify({"item": item}), 201
 
 
@@ -84,7 +86,7 @@ def update_item(item_id):
         abort(400, "Must be JSON.")
     wanted_item = None
     for item in items:
-        if item["id"] == item_id:
+        if item["item_id"] == item_id:
             wanted_item = item
             break
 
@@ -92,17 +94,23 @@ def update_item(item_id):
         message = f"No item with ID {item_id}."
         abort(404, message)
     update = request.json
-    if "name" in update:
-        if not isinstance(update["name"], str):
-            message = f"'name' field must be a str."
+    if "companyName" in update:
+        if not isinstance(update["companyName"], str):
+            message = f"'companuName' field must be a str."
             abort(404, message)
-        wanted_item["name"] = update["name"]
+        wanted_item["companyName"] = update["companyName"]
 
-    if "done" in update:
-        if not isinstance(update["done"], bool):
-            message = f"'done' field must be a boolean."
+    if "positionTitle" in update:
+        if not isinstance(update["positionTitle"], str):
+            message = f"'positionTitle' field must be a string."
             abort(404, message)
-        wanted_item["done"] = update["done"]
+        wanted_item["positionTitle"] = update["positionTitle"]
+
+    if "deadlineDate" in update:
+        if not isinstance(update["deadlineDate"], str):
+            message = f"'deadlineDate' field must be a string."
+            abort(404, message)
+        wanted_item["deadlineDate"] = update["deadlineDate"]
 
     return jsonify({"item": wanted_item})
 
@@ -111,7 +119,7 @@ def update_item(item_id):
 def delete_item(item_id):
     old_item = False
     for item in items:
-        if item["id"] == item_id:
+        if item["item_id"] == item_id:
             old_item = item
             break
     if not old_item:
